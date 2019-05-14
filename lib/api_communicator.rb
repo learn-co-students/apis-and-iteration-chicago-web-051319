@@ -16,15 +16,31 @@ def get_character_movies_from_api(character_name)
   # this collection will be the argument given to `print_movies`
   #  and that method will do some nice presentation stuff like puts out a list
   #  of movies by title. Have a play around with the puts with other info about a given film.
+
+  response_hash["results"].each do |results|
+    results.each do |attributes, data|
+        if data == character_name
+          return results["films"]
+        end
+    end
+  end
+
 end
 
 def print_movies(films)
   # some iteration magic and puts out the movies in a nice list
+  puts films
 end
 
 def show_character_movies(character)
   films = get_character_movies_from_api(character)
-  print_movies(films)
+  individual_film = []
+  films.each do |movie|
+    response_string = RestClient.get(movie)
+    response_hash = JSON.parse(response_string)
+    individual_film.push(response_hash["title"])
+  end
+  print_movies(individual_film)
 end
 
 ## BONUS
