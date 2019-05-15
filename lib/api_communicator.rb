@@ -6,7 +6,6 @@ def get_character_movies_from_api(character_name)
   #make the web request
   response_string = RestClient.get('http://www.swapi.co/api/people/')
   response_hash = JSON.parse(response_string)
-
   # iterate over the response hash to find the collection of `films` for the given
   #   `character`
   films_array = []
@@ -14,10 +13,7 @@ def get_character_movies_from_api(character_name)
       if character["name"].downcase == character_name
         films_array << character["films"]
       end
-    }
-  #Development/Flatiron/Module-1/apis-and-iteration-chicago-web-051319
-  # collect those film API urls, make a web request to each URL to get the info
-  #  for that film
+  }
 
   film_info_array = []
   films_array.flatten.each { |film|
@@ -26,15 +22,7 @@ def get_character_movies_from_api(character_name)
     film_info_array << response_hash
   }
 
-
-  # return value of this method should be collection of info about each film.
-
-  #  i.e. an array of hashes in which each hash reps a given film
-  # this collection will be the argument given to `print_movies`
-  #  and that method will do some nice presentation stuff like puts out a list
-  #  of movies by title. Have a play around with the puts with other info about a given film.
   movie_titles = [];
-
   film_info_array.each {|movie|
     movie_titles << movie["title"]
   }
@@ -42,7 +30,6 @@ def get_character_movies_from_api(character_name)
  end
 
 def print_movies(films)
-  # some iteration magic and puts out the movies in a nice list
   films.each {|film| puts film}
 end
 
